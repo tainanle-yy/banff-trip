@@ -613,28 +613,30 @@ function renderPlaces(){
 /* ====================== RENDER: BUDGET ====================== */
 /* ====================== BUDGET STATE ENGINE ====================== */
 // 15 meals — id, label, day, default tier
+// Each meal has its own fast/eatout cost per person (×2), pulled directly from spreadsheet
+// fast = "Fast food/Snacks" column, eatout = "Expensive dine out" column
 const MEALS = [
-  {id:'m1',  day:1, label:'D1 · Breakfast (snacks/car)',    tier:'fast'},
-  {id:'m2',  day:1, label:'D1 · Kamloops lunch',            tier:'eatout'},
-  {id:'m3',  day:1, label:'D1 · Jasper/Hinton dinner',      tier:'eatout'},
-  {id:'m4',  day:2, label:'D2 · Breakfast',                 tier:'fast'},
-  {id:'m5',  day:2, label:'D2 · Icefields lunch (snack)',   tier:'fast'},
-  {id:'m6',  day:2, label:'D2 · Banff/Canmore dinner',      tier:'eatout'},
-  {id:'m7',  day:3, label:'D3 · Breakfast',                 tier:'eatout'},
-  {id:'m8',  day:3, label:'D3 · Hoodoos snack',             tier:'fast'},
-  {id:'m9',  day:3, label:'D3 · Banff/Canmore dinner',      tier:'eatout'},
-  {id:'m10', day:4, label:'D4 · Breakfast',                 tier:'eatout'},
-  {id:'m11', day:4, label:'D4 · Yoho lunch (snack)',        tier:'fast'},
-  {id:'m12', day:4, label:'D4 · Revelstoke dinner',         tier:'eatout'},
-  {id:'m13', day:5, label:'D5 · Revelstoke breakfast',      tier:'eatout'},
-  {id:'m14', day:5, label:'D5 · Kelowna lunch',             tier:'fast'},
-  {id:'m15', day:5, label:'D5 · Burnaby dinner',            tier:'eatout'},
+  {id:'m1',  day:1, label:'D1 · Breakfast (snacks/car)',   tier:'fast',  fast:{pp:10,total:20},  eatout:{pp:25, total:50}},
+  {id:'m2',  day:1, label:'D1 · Kamloops lunch',           tier:'eatout',fast:{pp:30,total:60},  eatout:{pp:60, total:120}},
+  {id:'m3',  day:1, label:'D1 · Jasper/Hinton dinner',     tier:'eatout',fast:{pp:40,total:80},  eatout:{pp:70, total:140}},
+  {id:'m4',  day:2, label:'D2 · Breakfast',                tier:'fast',  fast:{pp:10,total:20},  eatout:{pp:40, total:80}},
+  {id:'m5',  day:2, label:'D2 · Icefields lunch (snack)',  tier:'fast',  fast:{pp:10,total:20},  eatout:{pp:30, total:60}},
+  {id:'m6',  day:2, label:'D2 · Banff/Canmore dinner',     tier:'eatout',fast:{pp:30,total:60},  eatout:{pp:70, total:140}},
+  {id:'m7',  day:3, label:'D3 · Breakfast',                tier:'eatout',fast:{pp:20,total:40},  eatout:{pp:40, total:80}},
+  {id:'m8',  day:3, label:'D3 · Hoodoos snack',            tier:'fast',  fast:{pp:10,total:20},  eatout:{pp:20, total:40}},
+  {id:'m9',  day:3, label:'D3 · Banff/Canmore dinner',     tier:'eatout',fast:{pp:40,total:80},  eatout:{pp:70, total:140}},
+  {id:'m10', day:4, label:'D4 · Breakfast',                tier:'eatout',fast:{pp:20,total:40},  eatout:{pp:40, total:80}},
+  {id:'m11', day:4, label:'D4 · Yoho lunch (snack)',       tier:'fast',  fast:{pp:10,total:20},  eatout:{pp:20, total:40}},
+  {id:'m12', day:4, label:'D4 · Revelstoke dinner',        tier:'eatout',fast:{pp:30,total:60},  eatout:{pp:60, total:120}},
+  {id:'m13', day:5, label:'D5 · Revelstoke breakfast',     tier:'eatout',fast:{pp:20,total:40},  eatout:{pp:40, total:80}},
+  {id:'m14', day:5, label:'D5 · Kelowna lunch',            tier:'fast',  fast:{pp:10,total:20},  eatout:{pp:45, total:90}},
+  {id:'m15', day:5, label:'D5 · Burnaby dinner',           tier:'fast',  fast:{pp:0, total:0},   eatout:{pp:50, total:100}},
 ];
 
-// Cost per person per tier (×2 people)
+// Two tiers only — labels used for buttons
 const TIERS = {
-  fast:   {label:'🍟 Fast/Snack', min:10, max:30},
-  eatout: {label:'🍽 Dine Out',   min:20, max:70},
+  fast:   {label:'🍟 Fast/Snack'},
+  eatout: {label:'🍽 Dine Out'},
 };
 
 // Optional activities that can be toggled on/off
@@ -682,13 +684,13 @@ function toggleOptional(id){
 function renderBudget(){
   const el = document.getElementById('budgetList');
 
-  // Calculate meal totals
-  let mealMin=0, mealMax=0;
-  MEALS.forEach(m=>{
-    const t = TIERS[m.tier];
-    mealMin += t.min * 2;
-    mealMax += t.max * 2;
-  });
+  // Calculate meal totals using each meal's own fast/eatout cost
+  let mealTotal = 0;
+  MEALS.forEach(m=>{ mealTotal += m[m.tier].total; });
+
+  // Min/max scenarios for range display
+  const mealMin = MEALS.reduce((s,m)=>s+m.fast.total, 0);
+  const mealMax = MEALS.reduce((s,m)=>s+m.eatout.total, 0);
 
   // Optional totals
   let optMin=0, optMax=0;
@@ -700,10 +702,11 @@ function renderBudget(){
 
   const grandMin = mealMin + optMin + fixMin;
   const grandMax = mealMax + optMax + fixMax;
+  const grandCurrent = mealTotal + optMin + fixMin; // current selections + min fixed
 
-  document.getElementById('budgetTotal').textContent = `$${grandMin.toLocaleString()}–$${grandMax.toLocaleString()}`;
-  document.getElementById('budgetLbl').textContent = 'estimated trip total';
-  document.getElementById('budgetRange').textContent = `Meals $${mealMin}–$${mealMax}  ·  Fixed $${fixMin}–$${fixMax}  ·  Optional $${optMin}–$${optMax}`;
+  document.getElementById('budgetTotal').textContent = `$${mealTotal + optMin + fixMin}–$${mealTotal + optMax + fixMax}`;
+  document.getElementById('budgetLbl').textContent = 'estimated trip total (current meal selections)';
+  document.getElementById('budgetRange').textContent = `All fast food: $${grandMin} · All dine out: $${grandMax}`;
 
   let html = '';
 
@@ -715,14 +718,13 @@ function renderBudget(){
       prevDay = m.day;
       html += `<div style="font-size:10px;color:var(--muted);padding:6px 0 2px;font-family:var(--mono);">Day ${m.day}</div>`;
     }
-    const t = TIERS[m.tier];
+    const cost = m[m.tier].total;
     html += `
     <div class="meal-toggle-row">
-      <div class="meal-toggle-label">${m.label} <span style="color:var(--muted);font-family:var(--mono);">$${t.min*2}–$${t.max*2}</span></div>
+      <div class="meal-toggle-label">${m.label} <span style="color:var(--accent2);font-family:var(--mono);">$${cost}</span></div>
       <div class="tier-btns">
-        ${Object.entries(TIERS).map(([key,tv])=>`
-          <button class="tier-btn ${m.tier===key?'active-'+key:''}" onclick="setMealTier('${m.id}','${key}')">${tv.label}</button>
-        `).join('')}
+        <button class="tier-btn ${m.tier==='fast'?'active-fast':''}" onclick="setMealTier('${m.id}','fast')">${TIERS.fast.label} $${m.fast.total}</button>
+        <button class="tier-btn ${m.tier==='eatout'?'active-eatout':''}" onclick="setMealTier('${m.id}','eatout')">${TIERS.eatout.label} $${m.eatout.total}</button>
       </div>
     </div>`;
   });
