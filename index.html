@@ -16,20 +16,8 @@
   }
   *{box-sizing:border-box;}
   html,body{height:100%;margin:0;font-family:var(--body);background:var(--bg);color:var(--text);}
-  #lockscreen{position:fixed;inset:0;background:
-      repeating-radial-gradient(circle at 20% 30%, transparent 0, transparent 38px, rgba(95,201,184,0.05) 39px, rgba(95,201,184,0.05) 40px),
-      var(--bg);
-    display:flex;align-items:center;justify-content:center;z-index:9999;}
-  #lockbox{background:var(--panel);padding:36px 30px;border-radius:4px;border:1px solid var(--border);width:300px;text-align:center;border-top:3px solid var(--accent);}
-  #lockbox h2{margin:0 0 6px;font-family:var(--disp);font-weight:800;font-size:26px;letter-spacing:0.3px;text-transform:uppercase;}
-  #lockbox p{color:var(--muted);font-size:12px;margin:0 0 20px;}
-  #lockbox input{width:100%;padding:10px 12px;border-radius:3px;border:1px solid var(--border);background:var(--bg);color:var(--text);font-family:var(--mono);font-size:13px;margin-bottom:10px;}
-  #lockbox button{width:100%;padding:10px;border-radius:3px;border:none;background:var(--accent);color:#0b1116;font-weight:700;cursor:pointer;font-size:12px;letter-spacing:1px;text-transform:uppercase;}
-  #lockbox button:hover{background:#74d6c6;}
-  #lockerr{color:var(--danger);font-size:11px;height:16px;margin-top:8px;font-family:var(--mono);}
-
   #app{display:none;height:100%;}
-  #app.show{display:flex;}
+  #app.show{display:flex;height:100%;}
   #sidebar{width:340px;min-width:340px;background:var(--panel);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden;}
   #map{flex:1;}
   .sb-header{padding:18px 16px 12px;border-bottom:1px solid var(--border);position:relative;overflow:hidden;}
@@ -69,9 +57,26 @@
   .budget-total{background:var(--panel2);border:1px solid var(--border);border-top:3px solid var(--accent2);border-radius:3px;padding:18px;margin-bottom:14px;text-align:center;}
   .budget-total .num{font-family:var(--disp);font-size:36px;font-weight:800;color:var(--accent2);letter-spacing:0.5px;}
   .budget-total .lbl{font-size:10px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-top:2px;}
-  .budget-row{display:flex;justify-content:space-between;font-size:12px;padding:8px 0;border-bottom:1px solid var(--border);}
-  .budget-row .bname{color:var(--text);}
-  .budget-row .bamt{color:var(--accent2);font-weight:600;font-family:var(--mono);}
+  .budget-range{font-family:var(--mono);font-size:11px;color:var(--muted);margin-top:4px;}
+  .budget-row{display:flex;justify-content:space-between;align-items:center;font-size:12px;padding:7px 0;border-bottom:1px solid var(--border);}
+  .budget-row .bname{color:var(--text);flex:1;}
+  .budget-row .bamt{color:var(--accent2);font-weight:600;font-family:var(--mono);font-size:11px;white-space:nowrap;}
+  .bdayhead{font-size:10px;color:var(--accent2);font-family:var(--mono);padding:10px 0 3px;letter-spacing:0.5px;text-transform:uppercase;border-top:1px solid var(--border);margin-top:4px;}
+  .bdayhead:first-child{border-top:none;margin-top:0;}
+  .meal-toggle-row{padding:6px 0;border-bottom:1px solid var(--border);}
+  .meal-toggle-label{font-size:12px;color:var(--text);margin-bottom:5px;}
+  .tier-btns{display:flex;gap:4px;}
+  .tier-btn{flex:1;padding:5px 2px;border-radius:3px;border:1px solid var(--border);background:transparent;color:var(--muted);font-size:10px;cursor:pointer;font-family:var(--mono);letter-spacing:0.2px;transition:all 0.15s;}
+  .tier-btn:hover{border-color:var(--accent);color:var(--accent);}
+  .tier-btn.active-fast{background:#2a3540;border-color:#d96a8f;color:#d96a8f;}
+  .tier-btn.active-eatout{background:#2a3540;border-color:#e0a458;color:#e0a458;}
+  .tier-btn.active-fine{background:#2a3540;border-color:#a587d9;color:#a587d9;}
+  .opt-toggle-row{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid var(--border);}
+  .opt-toggle-label{font-size:12px;color:var(--text);}
+  .opt-toggle-sub{font-size:10px;color:var(--muted);}
+  .opt-btn{padding:4px 10px;border-radius:3px;border:1px solid var(--border);background:transparent;font-size:10px;cursor:pointer;font-family:var(--mono);font-weight:600;transition:all 0.15s;}
+  .opt-btn.on{background:#1d3a2f;border-color:#6db87d;color:#6db87d;}
+  .opt-btn.off{background:#2a1a1a;border-color:#d9706a;color:#d9706a;}
 
   .addbtn{display:block;width:100%;padding:10px;border-radius:3px;border:1px dashed var(--border);background:transparent;color:var(--muted);font-size:11px;letter-spacing:0.3px;cursor:pointer;margin-bottom:12px;}
   .addbtn:hover{border-color:var(--accent);color:var(--accent);}
@@ -96,23 +101,14 @@
   .leg-title{font-family:var(--mono);font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
   .leg-row{display:flex;align-items:center;gap:7px;font-size:11px;margin-bottom:4px;}
   .leg-row:last-child{margin-bottom:0;}
+  .leg-sep{border-top:1px solid var(--border);margin:5px 0;}
   .leg-dot{width:9px;height:9px;border-radius:50%;display:inline-block;flex-shrink:0;}
   .leg-line{width:14px;height:3px;border-radius:2px;display:inline-block;flex-shrink:0;}
 </style>
 </head>
 <body>
 
-<div id="lockscreen">
-  <div id="lockbox">
-    <h2>Banff Trip</h2>
-    <p>Private map — enter password to continue</p>
-    <input type="password" id="pwinput" placeholder="Password" autofocus>
-    <button onclick="tryUnlock()">Unlock</button>
-    <div id="lockerr"></div>
-  </div>
-</div>
-
-<div id="app">
+<div id="app" class="show">
   <div id="sidebar">
     <div class="sb-header">
       <h1>Banff Trip</h1>
@@ -133,9 +129,9 @@
 
     <div class="tabpanel" id="tab-budget">
       <div class="budget-total">
-        <div class="num" id="budgetTotal">$0</div>
-        <div class="lbl">Total spent across all places</div>
-
+        <div class="num" id="budgetTotal">—</div>
+        <div class="lbl" id="budgetLbl">estimated total</div>
+        <div class="budget-range" id="budgetRange"></div>
       </div>
       <div id="budgetList"></div>
     </div>
@@ -146,29 +142,7 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
 <script>
-/* ====================== PASSWORD GATE ======================
-   Client-side only — fine for keeping casual visitors out of a
-   private trip-planning page, NOT real security. Change PASSWORD_HASH
-   by setting a new password below before you publish. */
-const APP_PASSWORD = "banff2026"; // <-- CHANGE THIS before publishing
-
-function tryUnlock(){
-  const v = document.getElementById('pwinput').value;
-  if(v === APP_PASSWORD){
-    document.getElementById('lockscreen').style.display='none';
-    document.getElementById('app').classList.add('show');
-    sessionStorage.setItem('unlocked','1');
-    initMap();
-  } else {
-    document.getElementById('lockerr').textContent = 'Incorrect password';
-  }
-}
-document.getElementById('pwinput').addEventListener('keydown', e=>{ if(e.key==='Enter') tryUnlock(); });
-if(sessionStorage.getItem('unlocked')==='1'){
-  document.getElementById('lockscreen').style.display='none';
-  document.getElementById('app').classList.add('show');
-  window.addEventListener('DOMContentLoaded', initMap);
-}
+window.addEventListener('DOMContentLoaded', initMap);
 
 /* ====================== TRIP DATA ====================== */
 const stops = [
@@ -199,35 +173,57 @@ const legs = [
 ];
 
 // Day 2 sightseeing stops in order, Hinton/Jasper -> Canmore
-const day2Stops = ["Pyramid Lake","Patricia Lake","Medicine Lake","Athabasca Falls","Maligne Lake","Athabasca Glacier (Icefield Centre)","Waterfowl Lake","Mistaya Canyon"];
+const day2Stops = ["Pyramid Lake","Patricia Lake","Medicine Lake","Athabasca Falls","Maligne Lake","Athabasca Glacier (Columbia Icefield Adventure)","Waterfowl Lake","Mistaya Canyon"];
 
-// Meal plan per day — swap "dine out" for fast food / hotel breakfast / snacks anytime, it's just a placeholder plan
+// Day 3 stops (not all planned yet)
+const day3Stops = ["Three Sisters (sunrise)","Banff Gondola","Bow Lake","Two Jack Lake","Lake Minnewanka","Moraine Lake (Parks Canada Shuttle needed)","Grassi Lakes Trail","Sunshine Meadows","Johnson Canyon","Sulphur Mountain","Hoodoos Trail","Peyto Lake","Banff Town"];
+
+// Day 4 Yoho stops en route to Revelstoke
+const day4Stops = ["Spiral Tunnel Viewpoint","Takakkaw Falls","Natural Bridge","Emerald Lake","Wapta Falls","Lake O'Hara (lottery bus / 30km hike)"];
+
+// Real meal + budget data from your spreadsheet (per person × 2 unless noted)
 const meals = {
   1: [
-    {meal:"Breakfast/snacks", note:"Snacks or sandwiches in the car, early start from Burnaby"},
-    {meal:"Lunch/Brunch", note:"Kamloops — dine out or quick stop"},
-    {meal:"Dinner", note:"Hinton or Jasper, depending on which one you stay in"},
+    {meal:"Breakfast", note:"Snacks in car · $20–50 total"},
+    {meal:"Lunch", note:"Kamloops · $60–120 total"},
+    {meal:"Dinner", note:"Jasper or Hinton · $80–140 total"},
+    {meal:"Hotel", note:"Hinton · $200–400/night"},
   ],
   2: [
-    {meal:"Breakfast", note:"Hinton or Jasper (wherever you stayed)"},
-    {meal:"Lunch", note:"Snacks in the car along Icefields Parkway"},
-    {meal:"Dinner", note:"Banff or Canmore"},
+    {meal:"Breakfast", note:"Hinton or Jasper · $20–80 total"},
+    {meal:"Lunch", note:"Snacks in car along Icefields Pkwy · $20–60 total"},
+    {meal:"Glacier", note:"Columbia Icefield Adventure · $0–288 total (optional)"},
+    {meal:"Dinner", note:"Banff or Canmore · $60–140 total"},
+    {meal:"Hotel", note:"Canmore · $300–500 (covers nights 2 & 3)"},
   ],
   3: [
-    {meal:"Breakfast", note:"Banff or Canmore"},
-    {meal:"Lunch", note:"In the car / quick bite"},
-    {meal:"Dinner", note:"Banff or Canmore"},
+    {meal:"Breakfast", note:"Banff or Canmore · $40–80 total"},
+    {meal:"Lunch", note:"Not planned yet"},
+    {meal:"Snack", note:"Hoodoos Trail · $20–40 total"},
+    {meal:"Dinner", note:"Banff or Canmore · $80–140 total"},
+    {meal:"Hotel", note:"Canmore · (2nd night, same booking as Day 2)"},
   ],
   4: [
-    {meal:"Breakfast", note:"Banff or Canmore"},
-    {meal:"Lunch", note:"In the car, en route to Revelstoke"},
-    {meal:"Dinner", note:"Revelstoke (arrive evening)"},
+    {meal:"Breakfast", note:"Banff or Canmore · $40–80 total"},
+    {meal:"Lunch", note:"Snacks in car through Yoho · $20–40 total"},
+    {meal:"Activity", note:"Emerald Lake boating · $0–200 total (optional)"},
+    {meal:"Activity", note:"Lake O'Hara bus · $0–50 total (lottery)"},
+    {meal:"Dinner", note:"Revelstoke · $60–120 total"},
+    {meal:"Hotel", note:"Revelstoke · $200–300/night"},
   ],
   5: [
-    {meal:"Breakfast", note:"Revelstoke"},
-    {meal:"Lunch", note:"Kelowna"},
-    {meal:"Dinner", note:"Back home — Coquitlam or Burnaby"},
+    {meal:"Breakfast", note:"Revelstoke · $40–80 total"},
+    {meal:"Lunch", note:"Kelowna · $20–90 total"},
+    {meal:"Dinner", note:"Coquitlam or Burnaby · $0–100 total"},
   ],
+};
+
+// Trip budget summary from spreadsheet
+const tripBudget = {
+  gas: {label:"Gas (2100–2500 km)", min:450, max:500},
+  other: {label:"Other car costs", min:50, max:100},
+  totalMin: 2080,
+  totalMax: 4198,
 };
 
 const CATS = {
@@ -247,29 +243,99 @@ function loadPlaces(){
 function savePlaces(places){ localStorage.setItem(STORE_KEY, JSON.stringify(places)); }
 let places = loadPlaces();
 
-// Day 2 Jasper-area stops you listed — merged in once, then fully editable (notes/cost) like any pin
+// Preset POIs from your spreadsheet — days 2, 3, 4. Merged once, fully editable after.
 const presetPOIs = [
-  {id:"preset-pyramid", name:"Pyramid Lake", cat:"lake", note:"", cost:0, lat:52.9235246, lng:-118.0988788},
-  {id:"preset-patricia", name:"Patricia Lake", cat:"lake", note:"", cost:0, lat:52.9040287, lng:-118.1012056},
-  {id:"preset-medicine", name:"Medicine Lake", cat:"lake", note:"", cost:0, lat:52.8543347, lng:-117.757241},
-  {id:"preset-athafalls", name:"Athabasca Falls", cat:"canyon", note:"", cost:0, lat:52.664437, lng:-117.8837673},
-  {id:"preset-maligne", name:"Maligne Lake", cat:"lake", note:"", cost:0, lat:52.6654279, lng:-117.5345287},
-  {id:"preset-athaglacier", name:"Athabasca Glacier (Icefield Centre)", cat:"canyon", note:"", cost:0, lat:52.2203483, lng:-117.2242371},
-  {id:"preset-waterfowl", name:"Waterfowl Lake", cat:"lake", note:"", cost:0, lat:51.8317285, lng:-116.6141708},
-  {id:"preset-mistaya", name:"Mistaya Canyon", cat:"canyon", note:"", cost:0, lat:51.9412558, lng:-116.7176194},
+  // Day 2 — Jasper / Icefields Pkwy
+  {id:"preset-pyramid",    name:"Pyramid Lake",                          cat:"lake",    note:"Day 2", cost:0,      lat:52.9235, lng:-118.0989},
+  {id:"preset-patricia",   name:"Patricia Lake",                          cat:"lake",    note:"Day 2", cost:0,      lat:52.9040, lng:-118.1012},
+  {id:"preset-medicine",   name:"Medicine Lake",                          cat:"lake",    note:"Day 2", cost:0,      lat:52.8543, lng:-117.7572},
+  {id:"preset-maligne",    name:"Maligne Lake",                           cat:"lake",    note:"Day 2", cost:0,      lat:52.6654, lng:-117.5345},
+  {id:"preset-athafalls",  name:"Athabasca Falls",                        cat:"canyon",  note:"Day 2", cost:0,      lat:52.6644, lng:-117.8838},
+  {id:"preset-athaglacier",name:"Athabasca Glacier (Icefield Centre)",    cat:"canyon",  note:"Day 2 · Columbia Icefield Adventure: $0–144/person", cost:0, lat:52.2203, lng:-117.2242},
+  {id:"preset-mistaya",    name:"Mistaya Canyon",                         cat:"canyon",  note:"Day 2", cost:0,      lat:51.9413, lng:-116.7176},
+  {id:"preset-waterfowl",  name:"Waterfowl Lake",                         cat:"lake",    note:"Day 2", cost:0,      lat:51.8317, lng:-116.6142},
+  // Day 3 — Banff area (not all planned yet)
+  {id:"preset-bowlake",    name:"Bow Lake",                               cat:"lake",    note:"Day 3", cost:0,      lat:51.6745, lng:-116.4711},
+  {id:"preset-twojack",    name:"Two Jack Lake",                          cat:"lake",    note:"Day 3", cost:0,      lat:51.2098, lng:-115.4979},
+  {id:"preset-minnewanka", name:"Lake Minnewanka",                        cat:"lake",    note:"Day 3", cost:0,      lat:51.2364, lng:-115.4296},
+  {id:"preset-moraine",    name:"Moraine Lake",                           cat:"lake",    note:"Day 3 · Parks Canada Shuttle required", cost:0, lat:51.3217, lng:-116.1860},
+  {id:"preset-peyto",      name:"Peyto Lake",                             cat:"lake",    note:"Day 3", cost:0,      lat:51.7243, lng:-116.5285},
+  {id:"preset-grassi",     name:"Grassi Lakes Trail",                     cat:"canyon",  note:"Day 3", cost:0,      lat:51.1246, lng:-115.3471},
+  {id:"preset-sunshine",   name:"Sunshine Meadows",                       cat:"canyon",  note:"Day 3", cost:0,      lat:51.0779, lng:-115.7627},
+  {id:"preset-johnson",    name:"Johnson Canyon",                         cat:"canyon",  note:"Day 3", cost:0,      lat:51.3877, lng:-115.8343},
+  {id:"preset-hoodoos",    name:"Hoodoos Trail",                          cat:"canyon",  note:"Day 3 · Snack budget ~$20–40 total", cost:0, lat:51.1617, lng:-115.5283},
+  // Day 4 — Yoho NP → Revelstoke
+  {id:"preset-spiral",     name:"Spiral Tunnel Viewpoint",                cat:"canyon",  note:"Day 4", cost:0,      lat:51.4474, lng:-116.4732},
+  {id:"preset-takakkaw",   name:"Takakkaw Falls",                         cat:"canyon",  note:"Day 4", cost:0,      lat:51.4993, lng:-116.4775},
+  {id:"preset-natbridge",  name:"Natural Bridge",                         cat:"canyon",  note:"Day 4", cost:0,      lat:51.4218, lng:-116.5088},
+  {id:"preset-emerald",    name:"Emerald Lake",                           cat:"lake",    note:"Day 4 · Boating $0–100/person (optional)", cost:0, lat:51.4402, lng:-116.5332},
+  {id:"preset-wapta",      name:"Wapta Falls",                            cat:"canyon",  note:"Day 4 · 5km hike", cost:0, lat:51.3803, lng:-116.7217},
+  {id:"preset-lakeohara",  name:"Lake O'Hara",                            cat:"lake",    note:"Day 4 · Lottery bus $0–25/person OR 30km hike", cost:0, lat:51.3606, lng:-116.3335},
 ];
 presetPOIs.forEach(p=>{
   if(!places.find(existing=>existing.id===p.id)) places.push(p);
 });
 savePlaces(places);
 
-// Day 1 route waypoints, in your requested order — actual road geometry fetched live via OSRM
+// Day 1 route waypoints
 const day1Waypoints = [
-  {name:"Burnaby", lat:49.2488, lng:-122.9805},
+  {name:"Burnaby",   lat:49.2488, lng:-122.9805},
   {name:"Coquitlam", lat:49.2838, lng:-122.7932},
-  {name:"Kamloops", lat:50.6745, lng:-120.3273},
-  {name:"Jasper", lat:52.8733, lng:-118.0823},
-  {name:"Hinton", lat:53.3991, lng:-117.5794},
+  {name:"Kamloops",  lat:50.6745, lng:-120.3273},
+  {name:"Jasper",    lat:52.8733, lng:-118.0823},
+  {name:"Hinton",    lat:53.3991, lng:-117.5794},
+];
+
+// Day 2 route waypoints — Hinton/Jasper → lakes detour → Icefields Pkwy south → Canmore
+const day2Waypoints = [
+  {name:"Hinton",            lat:53.3991, lng:-117.5794},
+  {name:"Jasper",            lat:52.8733, lng:-118.0823},
+  {name:"Pyramid Lake",      lat:52.9235, lng:-118.0989},
+  {name:"Patricia Lake",     lat:52.9040, lng:-118.1012},
+  {name:"Jasper",            lat:52.8733, lng:-118.0823},
+  {name:"Medicine Lake",     lat:52.8543, lng:-117.7572},
+  {name:"Maligne Lake",      lat:52.6654, lng:-117.5345},
+  {name:"Jasper",            lat:52.8733, lng:-118.0823},
+  {name:"Athabasca Falls",   lat:52.6644, lng:-117.8838},
+  {name:"Icefield Centre",   lat:52.2203, lng:-117.2242},
+  {name:"Mistaya Canyon",    lat:51.9413, lng:-116.7176},
+  {name:"Waterfowl Lake",    lat:51.8317, lng:-116.6142},
+  {name:"Canmore",           lat:51.0884, lng:-115.3479},
+];
+
+// Day 3 — Banff area day trips from Canmore base (loop back to Canmore)
+const day3Waypoints = [
+  {name:"Canmore",           lat:51.0884, lng:-115.3479},
+  {name:"Banff",             lat:51.1784, lng:-115.5708},
+  {name:"Lake Minnewanka",   lat:51.2364, lng:-115.4296},
+  {name:"Two Jack Lake",     lat:51.2098, lng:-115.4979},
+  {name:"Moraine Lake",      lat:51.3217, lng:-116.1860},
+  {name:"Peyto Lake",        lat:51.7243, lng:-116.5285},
+  {name:"Bow Lake",          lat:51.6745, lng:-116.4711},
+  {name:"Banff",             lat:51.1784, lng:-115.5708},
+  {name:"Johnson Canyon",    lat:51.3877, lng:-115.8343},
+  {name:"Sunshine Meadows",  lat:51.0779, lng:-115.7627},
+  {name:"Hoodoos Trail",     lat:51.1617, lng:-115.5283},
+  {name:"Canmore",           lat:51.0884, lng:-115.3479},
+];
+
+// Day 4 — Canmore → Yoho NP → Revelstoke
+const day4Waypoints = [
+  {name:"Canmore",                lat:51.0884, lng:-115.3479},
+  {name:"Spiral Tunnel",          lat:51.4474, lng:-116.4732},
+  {name:"Takakkaw Falls",         lat:51.4993, lng:-116.4775},
+  {name:"Natural Bridge",         lat:51.4218, lng:-116.5088},
+  {name:"Emerald Lake",           lat:51.4402, lng:-116.5332},
+  {name:"Lake O'Hara",            lat:51.3606, lng:-116.3335},
+  {name:"Wapta Falls",            lat:51.3803, lng:-116.7217},
+  {name:"Revelstoke",             lat:50.9981, lng:-118.1957},
+];
+
+// Day 5 — Revelstoke → Kelowna → Burnaby
+const day5Waypoints = [
+  {name:"Revelstoke",  lat:50.9981, lng:-118.1957},
+  {name:"Kelowna",     lat:49.8863, lng:-119.4966},
+  {name:"Burnaby",     lat:49.2488, lng:-122.9805},
 ];
 
 /* ====================== MAP ====================== */
@@ -285,7 +351,11 @@ function initMap(){
 
   markersLayer = L.layerGroup().addTo(map);
 
-  drawRoadRoute(day1Waypoints, '#e0a458', 'Day 1: Burnaby → Coquitlam → Kamloops → Jasper → Hinton');
+  drawRoadRoute(day1Waypoints, '#e0a458', 'Day 1 · Burnaby → Coquitlam → Kamloops → Jasper → Hinton');
+  drawRoadRoute(day2Waypoints, '#5fc9b8', 'Day 2 · Hinton/Jasper → Icefields Pkwy → Canmore');
+  drawRoadRoute(day3Waypoints, '#a587d9', 'Day 3 · Banff area day trips from Canmore');
+  drawRoadRoute(day4Waypoints, '#d96a8f', 'Day 4 · Canmore → Yoho NP → Revelstoke');
+  drawRoadRoute(day5Waypoints, '#6db87d', 'Day 5 · Revelstoke → Kelowna → Burnaby');
 
   // Trip stop markers (fixed, not editable/deletable)
   stops.forEach(s=>{
@@ -336,16 +406,17 @@ async function fetchRouteWithFallback(coordStr){
 async function drawRoadRoute(waypoints, color, label){
   const coordStr = waypoints.map(w=>`${w.lng},${w.lat}`).join(';');
   const data = await fetchRouteWithFallback(coordStr);
+  let line;
   if(data){
     const coords = data.routes[0].geometry.coordinates.map(c=>[c[1],c[0]]); // lng,lat -> lat,lng
-    const line = L.polyline(coords, {color, weight:4, opacity:0.85}).addTo(map);
+    line = L.polyline(coords, {color, weight:4, opacity:0.85}).addTo(map);
     line.bindPopup(`<b>${label}</b>`);
-    map.fitBounds(line.getBounds(), {padding:[40,40]});
   } else {
     console.warn('All routing servers failed, falling back to straight segments for:', label);
-    L.polyline(waypoints.map(w=>[w.lat,w.lng]), {color, weight:3, opacity:0.6, dashArray:'4 6'}).addTo(map)
+    line = L.polyline(waypoints.map(w=>[w.lat,w.lng]), {color, weight:3, opacity:0.6, dashArray:'4 6'}).addTo(map)
       .bindPopup(`<b>${label}</b><br><span style="color:#7d93a3;font-size:11px;">(live routing unavailable right now — straight line shown, try reloading later)</span>`);
   }
+  return line;
 }
 
 function addLegend(){
@@ -356,11 +427,16 @@ function addLegend(){
       <div class="leg-title">Legend</div>
       <div class="leg-row"><span class="leg-dot" style="background:${CATS.stop.color}"></span>Trip stop</div>
       <div class="leg-row"><span class="leg-dot" style="background:${CATS.lake.color}"></span>Lake</div>
-      <div class="leg-row"><span class="leg-dot" style="background:${CATS.canyon.color}"></span>Canyon</div>
+      <div class="leg-row"><span class="leg-dot" style="background:${CATS.canyon.color}"></span>Canyon / Falls</div>
       <div class="leg-row"><span class="leg-dot" style="background:${CATS.restaurant.color}"></span>Restaurant</div>
-      <div class="leg-row"><span class="leg-dot" style="background:${CATS.food.color}"></span>Quick/fast food</div>
+      <div class="leg-row"><span class="leg-dot" style="background:${CATS.food.color}"></span>Quick / Fast Food</div>
       <div class="leg-row"><span class="leg-dot" style="background:${CATS.hotel.color}"></span>Hotel</div>
-      <div class="leg-row"><span class="leg-line" style="background:#e0a458"></span>Driving route</div>
+      <div class="leg-sep"></div>
+      <div class="leg-row"><span class="leg-line" style="background:#e0a458"></span>Day 1 route</div>
+      <div class="leg-row"><span class="leg-line" style="background:#5fc9b8"></span>Day 2 route</div>
+      <div class="leg-row"><span class="leg-line" style="background:#a587d9"></span>Day 3 route</div>
+      <div class="leg-row"><span class="leg-line" style="background:#d96a8f"></span>Day 4 route</div>
+      <div class="leg-row"><span class="leg-line" style="background:#6db87d"></span>Day 5 route</div>
     `;
     return div;
   };
@@ -495,10 +571,12 @@ function renderItinerary(){
       const leg = legs.find(l=>l.from===cleanName);
       if(leg) html += `<div class="leg">↳ to ${leg.to}: ${leg.time} (${leg.dist})</div>`;
     });
-    if(day=='2'){
-      html += `<div class="meals" style="border-top:1px dashed var(--border);"><div class="meal-row" style="margin-bottom:6px;"><span class="meal-tag" style="width:auto;">EN ROUTE STOPS</span></div>`;
-      day2Stops.forEach((name,i)=>{
-        html += `<div class="meal-row"><span class="meal-tag" style="width:18px;">${i+1}.</span><span class="meal-note">${name}</span></div>`;
+    const stopsMap = {'2':day2Stops,'3':day3Stops,'4':day4Stops};
+    if(stopsMap[day]){
+      const unplanned = day=='3';
+      html += `<div class="meals"><div class="meal-row" style="margin-bottom:4px;"><span class="meal-tag" style="width:auto;color:var(--muted);">EN ROUTE${unplanned?' (not all planned)':''}</span></div>`;
+      stopsMap[day].forEach((name,i)=>{
+        html += `<div class="meal-row"><span class="meal-tag" style="width:18px;color:var(--muted);">${i+1}.</span><span class="meal-note">${name}</span></div>`;
       });
       html += `</div>`;
     }
@@ -534,21 +612,159 @@ function renderPlaces(){
 }
 
 /* ====================== RENDER: BUDGET ====================== */
+/* ====================== BUDGET STATE ENGINE ====================== */
+// 15 meals — id, label, day, default tier
+const MEALS = [
+  {id:'m1',  day:1, label:'D1 · Breakfast (snacks/car)',    tier:'fast'},
+  {id:'m2',  day:1, label:'D1 · Kamloops lunch',            tier:'eatout'},
+  {id:'m3',  day:1, label:'D1 · Jasper/Hinton dinner',      tier:'eatout'},
+  {id:'m4',  day:2, label:'D2 · Breakfast',                 tier:'fast'},
+  {id:'m5',  day:2, label:'D2 · Icefields lunch (snack)',   tier:'fast'},
+  {id:'m6',  day:2, label:'D2 · Banff/Canmore dinner',      tier:'eatout'},
+  {id:'m7',  day:3, label:'D3 · Breakfast',                 tier:'eatout'},
+  {id:'m8',  day:3, label:'D3 · Hoodoos snack',             tier:'fast'},
+  {id:'m9',  day:3, label:'D3 · Banff/Canmore dinner',      tier:'eatout'},
+  {id:'m10', day:4, label:'D4 · Breakfast',                 tier:'eatout'},
+  {id:'m11', day:4, label:'D4 · Yoho lunch (snack)',        tier:'fast'},
+  {id:'m12', day:4, label:'D4 · Revelstoke dinner',         tier:'eatout'},
+  {id:'m13', day:5, label:'D5 · Revelstoke breakfast',      tier:'eatout'},
+  {id:'m14', day:5, label:'D5 · Kelowna lunch',             tier:'fast'},
+  {id:'m15', day:5, label:'D5 · Burnaby dinner',            tier:'eatout'},
+];
+
+// Cost per person per tier (×2 people)
+const TIERS = {
+  fast:   {label:'🍟 Fast/Snack', min:10, max:30},
+  eatout: {label:'🍽 Eat Out',    min:20, max:40},
+  fine:   {label:'🥩 Fine Dine',  min:30, max:70},
+};
+
+// Optional activities that can be toggled on/off
+const OPTIONALS = [
+  {id:'icefield', label:'Columbia Icefield Adventure', sub:'$144.21/person × 2', cost:288.42, on:true},
+  {id:'boating',  label:'Emerald Lake Boating',        sub:'$0–100/person × 2',  cost:200,    on:false},
+  {id:'lakeohara',label:'Lake O\'Hara Shuttle',        sub:'$25/person × 2 (lottery)', cost:50, on:false},
+];
+
+// Fixed costs (hotels, gas, etc.)
+const FIXED = [
+  {label:'Hinton hotel',           min:200, max:400},
+  {label:'Canmore hotel (2 nights)',min:600, max:1000},
+  {label:'Revelstoke hotel',       min:200, max:300},
+  {label:'Gas (2100–2500 km)',      min:450, max:500},
+  {label:'Other car costs',         min:50,  max:100},
+];
+
+// Mutable state — persisted in sessionStorage so it survives tab switches
+function loadBudgetState(){
+  try{
+    const s = JSON.parse(sessionStorage.getItem('banffBudgetState'));
+    if(s){
+      MEALS.forEach(m=>{ if(s.meals[m.id]) m.tier = s.meals[m.id]; });
+      OPTIONALS.forEach(o=>{ if(s.opts[o.id]!=null) o.on = s.opts[o.id]; });
+    }
+  }catch(e){}
+}
+function saveBudgetState(){
+  const meals = {}; MEALS.forEach(m=>meals[m.id]=m.tier);
+  const opts  = {}; OPTIONALS.forEach(o=>opts[o.id]=o.on);
+  sessionStorage.setItem('banffBudgetState', JSON.stringify({meals,opts}));
+}
+loadBudgetState();
+
+function setMealTier(id, tier){
+  const m = MEALS.find(m=>m.id===id);
+  if(m){ m.tier=tier; saveBudgetState(); renderBudget(); }
+}
+function toggleOptional(id){
+  const o = OPTIONALS.find(o=>o.id===id);
+  if(o){ o.on=!o.on; saveBudgetState(); renderBudget(); }
+}
+
 function renderBudget(){
-  const total = places.reduce((sum,p)=>sum+(p.cost||0),0);
-  document.getElementById('budgetTotal').textContent = '$' + total.toFixed(2);
   const el = document.getElementById('budgetList');
+
+  // Calculate meal totals
+  let mealMin=0, mealMax=0;
+  MEALS.forEach(m=>{
+    const t = TIERS[m.tier];
+    mealMin += t.min * 2;
+    mealMax += t.max * 2;
+  });
+
+  // Optional totals
+  let optMin=0, optMax=0;
+  OPTIONALS.forEach(o=>{ if(o.on){ optMin+=o.cost; optMax+=o.cost; } });
+
+  // Fixed totals
+  let fixMin=0, fixMax=0;
+  FIXED.forEach(f=>{ fixMin+=f.min; fixMax+=f.max; });
+
+  const grandMin = mealMin + optMin + fixMin;
+  const grandMax = mealMax + optMax + fixMax;
+
+  document.getElementById('budgetTotal').textContent = `$${grandMin.toLocaleString()}–$${grandMax.toLocaleString()}`;
+  document.getElementById('budgetLbl').textContent = 'estimated trip total';
+  document.getElementById('budgetRange').textContent = `Meals $${mealMin}–$${mealMax}  ·  Fixed $${fixMin}–$${fixMax}  ·  Optional $${optMin}–$${optMax}`;
+
+  let html = '';
+
+  // ── MEALS ──
+  html += `<div class="bdayhead">🍴 Meals (tap to change tier)</div>`;
+  let prevDay = null;
+  MEALS.forEach(m=>{
+    if(m.day !== prevDay){
+      prevDay = m.day;
+      html += `<div style="font-size:10px;color:var(--muted);padding:6px 0 2px;font-family:var(--mono);">Day ${m.day}</div>`;
+    }
+    const t = TIERS[m.tier];
+    html += `
+    <div class="meal-toggle-row">
+      <div class="meal-toggle-label">${m.label} <span style="color:var(--muted);font-family:var(--mono);">$${t.min*2}–$${t.max*2}</span></div>
+      <div class="tier-btns">
+        ${Object.entries(TIERS).map(([key,tv])=>`
+          <button class="tier-btn ${m.tier===key?'active-'+key:''}" onclick="setMealTier('${m.id}','${key}')">${tv.label}</button>
+        `).join('')}
+      </div>
+    </div>`;
+  });
+
+  // ── OPTIONAL ACTIVITIES ──
+  html += `<div class="bdayhead">🎿 Optional Activities</div>`;
+  OPTIONALS.forEach(o=>{
+    html += `
+    <div class="opt-toggle-row">
+      <div>
+        <div class="opt-toggle-label">${o.label}</div>
+        <div class="opt-toggle-sub">${o.sub}</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <span style="font-family:var(--mono);font-size:11px;color:${o.on?'var(--accent2)':'var(--muted)'};">${o.on?'$'+o.cost.toFixed(0):'$0'}</span>
+        <button class="opt-btn ${o.on?'on':'off'}" onclick="toggleOptional('${o.id}')">${o.on?'ON':'OFF'}</button>
+      </div>
+    </div>`;
+  });
+
+  // ── FIXED COSTS ──
+  html += `<div class="bdayhead">🏨 Fixed Costs</div>`;
+  FIXED.forEach(f=>{
+    html += `<div class="budget-row"><span class="bname">${f.label}</span><span class="bamt">$${f.min}–$${f.max}</span></div>`;
+  });
+
+  // ── LOGGED ACTUAL ──
   const withCost = places.filter(p=>p.cost>0).sort((a,b)=>b.cost-a.cost);
-  if(withCost.length===0){
-    el.innerHTML = `<div class="empty">No spending logged yet.<br>Add a cost when you create or edit a place pin.</div>`;
-    return;
+  if(withCost.length>0){
+    const loggedTotal = withCost.reduce((s,p)=>s+p.cost,0);
+    html += `<div class="bdayhead">📍 Logged on Map ($${loggedTotal.toFixed(2)} total)</div>`;
+    html += withCost.map(p=>`
+      <div class="budget-row">
+        <span class="bname">${esc(p.name)} <span style="color:var(--muted);font-size:10px;">(${CATS[p.cat]?.label||p.cat})</span></span>
+        <span class="bamt">$${p.cost.toFixed(2)}</span>
+      </div>
+    `).join('');
   }
-  el.innerHTML = withCost.map(p=>`
-    <div class="budget-row">
-      <span class="bname">${esc(p.name)} <span style="color:var(--muted);font-size:10px;">(${CATS[p.cat].label})</span></span>
-      <span class="bamt">$${p.cost.toFixed(2)}</span>
-    </div>
-  `).join('');
+
+  el.innerHTML = html;
 }
 </script>
 </body>
