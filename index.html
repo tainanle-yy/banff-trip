@@ -70,7 +70,6 @@
   .tier-btn:hover{border-color:var(--accent);color:var(--accent);}
   .tier-btn.active-fast{background:#2a3540;border-color:#d96a8f;color:#d96a8f;}
   .tier-btn.active-eatout{background:#2a3540;border-color:#e0a458;color:#e0a458;}
-  .tier-btn.active-fine{background:#2a3540;border-color:#a587d9;color:#a587d9;}
   .opt-toggle-row{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid var(--border);}
   .opt-toggle-label{font-size:12px;color:var(--text);}
   .opt-toggle-sub{font-size:10px;color:var(--muted);}
@@ -635,8 +634,7 @@ const MEALS = [
 // Cost per person per tier (×2 people)
 const TIERS = {
   fast:   {label:'🍟 Fast/Snack', min:10, max:30},
-  eatout: {label:'🍽 Eat Out',    min:20, max:40},
-  fine:   {label:'🥩 Fine Dine',  min:30, max:70},
+  eatout: {label:'🍽 Dine Out',   min:20, max:70},
 };
 
 // Optional activities that can be toggled on/off
@@ -648,11 +646,11 @@ const OPTIONALS = [
 
 // Fixed costs (hotels, gas, etc.)
 const FIXED = [
-  {label:'Hinton hotel',           min:200, max:400},
-  {label:'Canmore hotel (2 nights)',min:600, max:1000},
-  {label:'Revelstoke hotel',       min:200, max:300},
-  {label:'Gas (2100–2500 km)',      min:450, max:500},
-  {label:'Other car costs',         min:50,  max:100},
+  {label:'Hinton hotel',            min:200, max:400},
+  {label:'Canmore hotel (2 nights)', min:600, max:1000},
+  {label:'Revelstoke hotel',         min:200, max:300},
+  {label:'Gas (2100–2500 km)',        min:450, max:500},
+  {label:'Parking fees',             min:50,  max:100},
 ];
 
 // Mutable state — persisted in sessionStorage so it survives tab switches
